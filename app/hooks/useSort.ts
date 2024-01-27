@@ -50,6 +50,7 @@ export const useSort = <T extends Record<string, any>>(
   };
 };
 
+// @ts-ignore
 export const naturalSorter = (key: string, sensitive?: boolean) => (a, b) => {
   const av = a[key];
   const bv = b[key];
