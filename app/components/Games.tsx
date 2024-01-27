@@ -1,5 +1,6 @@
 'use client'
 
+import { clsx } from "clsx"
 import { useState } from "react"
 import { useSort } from "../hooks/useSort"
 import type { Game } from "../lib/types"
@@ -43,49 +44,66 @@ export const Games = ({ games }: IProps) => {
   }
 
   return (
-    <div>
+    <>
       {/* Filter */}
-      <div>
-        <div onClick={() => setShowPlatforms(!showPlatforms)}>
-          <span>Platform:</span>
-          <span>
-            {!platform ? 'All' : parsePlatformName(platform as Platform)}
-          </span>
+      <section className="w-full max-w-4xl flex items-center justify-between">
+        <div className="w-fit relative cursor-pointer">
+          <div className="border rounded-lg p-2" onClick={() => setShowPlatforms(!showPlatforms)}>
+            <span className="px-4">Platform</span>
+            <span className="p-2">|</span>
+            <span className="px-4 text-purple-hilight">
+              {!platform ? 'All' : parsePlatformName(platform as Platform)}
+            </span>
+          </div>
+          {showPlatforms && (
+            <ul className="absolute mt-2 border rounded-lg bg-beige text-purple-dark w-64 border-beige overflow-hidden">
+              <li className="p-2 px-4 hover:bg-purple-dark hover:text-purple-hilight" onClick={() => onSelectPlatform(undefined)}>All</li>
+              {platforms.map((p, index) => (
+                <li
+                  className="py-2 px-4 hover:bg-purple-dark hover:text-purple-hilight"
+                  key={index}
+                  onClick={() => onSelectPlatform(p)}
+                >
+                  {parsePlatformName(p)}
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
-        {showPlatforms && (
-          <ul>
-            <li onClick={() => onSelectPlatform(undefined)}>All</li>
-            {platforms.map((p, index) => (
-              <li
-                key={index}
-                onClick={() => onSelectPlatform(p)}
-              >
-                {parsePlatformName(p)}
-              </li>
-            ))}
-          </ul>
-        )}
-      </div>
+        <div>
+          Total games: <span className="text-purple-hilight">{sortedGames.length}</span>
+        </div>
+      </section>
 
       {/* Games */}
-      <div>
-        <table>
+      <section className="w-full max-w-4xl mt-4">
+        <table className="w-full border rounded-lg border-separate border-spacing-0 overflow-hidden">
         <thead>
           <tr>
-            <th onClick={() => sort({ key: 'name' })}>Name</th>
-            <th>Platform</th>
+            <th
+              className="border-b border-beige text-left py-2 px-4 text-purple-hilight w-6/12"
+              onClick={() => sort({ key: 'name' })}
+            >
+                Name
+            </th>
+            <th className="border-b border-beige text-left py-2 px-4 text-purple-hilight w-6/12">Platform</th>
           </tr>
         </thead>
         <tbody>
           {sortedGames.map((game, index) => (
-            <tr key={index}>
-              <td>{game.name}</td>
-              <td>{game.platform.brand} {game.platform.console}</td>
+            <tr
+              key={index}
+              className={
+                clsx(index % 2 !== 0 && 'bg-blue-dark')
+              }
+            >
+              <td className="py-2 px-4">{game.name}</td>
+              <td className="py-2 px-4">{game.platform.brand} {game.platform.console}</td>
             </tr>
           ))}
         </tbody>
       </table>
-      </div>
-    </div>
+      </section>
+    </>
   )
 }
