@@ -12,37 +12,33 @@ import { Game, Platform } from '@utils/getGames';
 
 import { useSort } from '@hooks/useSort';
 
-interface IActions {
-  getPlatformName: (p: Platform) => string;
-  setPlatform: Dispatch<SetStateAction<Platform | undefined>>;
+interface IGameContext {
+  data: Game[];
+  pages: {
+    count: number;
+    current: number;
+    onChange: (p: number) => void;
+  };
 }
 
-interface ISort {
-  sortConfig: ReturnType<typeof useSort>['sortConfig'];
-  sortGames: ReturnType<typeof useSort>['sort'];
-}
-
-interface IQuery {
-  set: Dispatch<SetStateAction<string>>;
+interface IQueryContext {
+  onQuery: Dispatch<SetStateAction<string>>;
   value: string | undefined;
 }
 
-interface IContext {
-  actions: IActions;
-  games: Game[];
-  platform: Platform | undefined;
-  platforms: Platform[];
-  query: IQuery;
-  sort: ISort;
+interface ISortContext {
+  config: ReturnType<typeof useSort>['sortConfig'];
+  onSort: ReturnType<typeof useSort>['sort'];
 }
 
-export const GameContext = createContext<IContext>({
-  actions: {} as IActions,
-  games: [],
-  platform: undefined,
-  platforms: [],
-  query: {} as IQuery,
-  sort: {} as ISort,
+export const GameContext = createContext<{
+  games: IGameContext;
+  query: IQueryContext;
+  sort: ISortContext;
+}>({
+  games: {} as IGameContext,
+  query: {} as IQueryContext,
+  sort: {} as ISortContext,
 });
 
 export const GameProvider = ({
@@ -53,35 +49,39 @@ export const GameProvider = ({
   children: React.ReactNode;
 }) => {
   const [query, setQuery] = useState<string>('');
-  const [platform, setPlatform] = useState<Platform>();
+  // const [platform, setPlatform] = useState<Platform>();
+  const [currentPage, setCurrentPage] = useState(0);
 
+  const filteredGames = filterGames(data, query);
   const {
-    data: games,
+    data: sortedGames,
     sort: sortGames,
     sortConfig,
-  } = useSort(filterGames(data, query), {
-    direction: 'asc',
-    key: 'name',
-  });
+  } = useSort(filteredGames, { direction: 'asc', key: 'name' });
+  const paginatedGames = paginateGames(sortedGames);
 
-  const platforms = filterPlatforms(games);
+  // const platforms = filterPlatforms(data);
 
-  const queryObject = { set: setQuery, value: query };
+  // const queryObject = { set: setQuery, value: query };
 
   return (
     <GameContext.Provider
       value={{
-        actions: {
-          getPlatformName,
-          setPlatform,
+        games: {
+          data: paginatedGames.data[currentPage],
+          pages: {
+            count: paginatedGames.count,
+            current: currentPage,
+            onChange: (p: number) => setCurrentPage(p),
+          },
         },
-        games,
-        platform,
-        platforms,
-        query: queryObject,
+        query: {
+          onQuery: setQuery,
+          value: query,
+        },
         sort: {
-          sortConfig,
-          sortGames,
+          config: sortConfig,
+          onSort: sortGames,
         },
       }}
     >
@@ -92,6 +92,17 @@ export const GameProvider = ({
 
 const filterGames = (games: Game[], query: string | undefined) => {
   return games.filter((game) => (!query ? game : game.name.includes(query)));
+};
+
+const paginateGames = (games: Game[]) => {
+  const pageSize = 50;
+  const pageCount = Math.ceil(games.length / pageSize);
+  return {
+    count: pageCount,
+    data: Array.from({ length: pageCount }, (_, i) =>
+      games.slice(i * pageSize, (i + 1) * pageSize),
+    ),
+  };
 };
 
 // const filterGames = (games: Game[], platform: Platform | undefined) => {

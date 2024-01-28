@@ -8,11 +8,7 @@ import { GameContext } from '@context/gameContext';
 import { Icon } from '@components/Icon';
 
 export const Games = () => {
-  const {
-    sort: { sortConfig, sortGames },
-    games,
-    query,
-  } = useContext(GameContext);
+  const { games, query, sort } = useContext(GameContext);
   return (
     <section className="w-full max-w-5xl">
       <table className="w-full border-separate border-spacing-0 overflow-hidden rounded-lg border">
@@ -20,14 +16,14 @@ export const Games = () => {
           <tr>
             <Table.Heading
               width="w-[55%]"
-              onClick={() => sortGames({ key: 'name' })}
+              onClick={() => sort.onSort({ key: 'name' })}
             >
               <div className="flex cursor-pointer items-center">
                 Name
                 <span
                   className={clsx(
                     'ml-2',
-                    sortConfig.direction === 'asc'
+                    sort.config.direction === 'asc'
                       ? 'arc-arrow-down'
                       : 'arc-arrow-up',
                   )}
@@ -41,14 +37,14 @@ export const Games = () => {
           </tr>
         </thead>
         <tbody>
-          {!!query.value && !games.length ? (
+          {!!query.value && !games.data.length ? (
             <tr>
               <td className="px-4 py-20 text-center" colSpan={3}>
                 No search results :(
               </td>
             </tr>
           ) : (
-            games.map((game, index) => (
+            games.data.map((game, index) => (
               <tr
                 key={index}
                 className={clsx(index % 2 !== 0 && 'bg-arc-blue-dark')}
