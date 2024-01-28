@@ -1,6 +1,12 @@
 'use client';
 
-import { Dispatch, SetStateAction, createContext, useState } from 'react';
+import {
+  Dispatch,
+  SetStateAction,
+  createContext,
+  useMemo,
+  useState,
+} from 'react';
 
 import { Game, Platform } from '@utils/getGames';
 
