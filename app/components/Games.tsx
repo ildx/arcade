@@ -3,15 +3,13 @@
 import { clsx } from 'clsx';
 import { useState } from 'react';
 
-import { useSort } from '../hooks/useSort';
+import { Game, Platform } from '@utils/getGames';
 
-import type { Game } from '../lib/types';
+import { useSort } from '@hooks/useSort';
 
 interface IProps {
   games: Game[];
 }
-
-type Platform = Game['platform'];
 
 export const Games = ({ games }: IProps) => {
   const [platform, setPlatform] = useState<Platform>();

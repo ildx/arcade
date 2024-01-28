@@ -1,4 +1,4 @@
-import headerImage from '../images/header.jpg';
+import headerImage from '@images/header.jpg';
 
 export const Header = () => {
   return (

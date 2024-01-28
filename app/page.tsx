@@ -1,7 +1,7 @@
-import { getGames } from './lib/getGames';
+import { getGames } from '@utils/getGames';
 
-import { Games } from './components/Games';
-import { Header } from './components/Header';
+import { Games } from '@components/Games';
+import { Header } from '@components/Header';
 
 export default async function Page() {
   const games = await getGames();
