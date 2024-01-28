@@ -3,22 +3,32 @@
 @tailwind utilities;
 
 :root {
-  --white: #ffffff;
-  --beige: #ffedd5;
-  --blue-dark: #110f27;
-  --purple-dark: #04021e;
-  --purple-hilight: #c026d3;
+  --arc-white: #ffffff;
+  --arc-beige: #ffedd5;
+  --arc-blue-dark: #110f27;
+  --arc-purple-dark: #04021e;
+  --arc-purple-hilight: #c026d3;
 }
 
 body {
-  color: var(--beige);
-  background: var(--purple-dark);
+  color: var(--arc-beige);
+  background: var(--arc-purple-dark);
 }
 
 @layer base {
-  .text-stroke-beige {
-    text-shadow: -2px -2px 0 var(--beige), 2px -2px 0 var(--beige),
-      -2px 2px 0 var(--beige), 2px 2px 0 var(--beige);
+  .arc-text-stroke {
+    text-shadow:
+      -2px -2px 0 var(--arc-beige),
+      2px -2px 0 var(--arc-beige),
+      -2px 2px 0 var(--arc-beige),
+      2px 2px 0 var(--arc-beige);
+  }
+  .arc-arrow-right {
+    width: 0;
+    height: 0;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    border-left: 10px solid green;
   }
 }
 

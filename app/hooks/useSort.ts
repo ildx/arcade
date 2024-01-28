@@ -1,7 +1,7 @@
-import naturalCompare from "natural-compare-lite";
-import { useMemo, useState } from "react";
+import naturalCompare from 'natural-compare-lite';
+import { useMemo, useState } from 'react';
 
-type SortDirection = "asc" | "desc";
+type SortDirection = 'asc' | 'desc';
 
 interface ISortProps {
   key: string;
@@ -16,25 +16,25 @@ export interface ISortConfig<T = Record<string, any>> {
 
 export const useSort = <T extends Record<string, any>>(
   data: T[],
-  config: ISortConfig
+  config: ISortConfig,
 ) => {
   const [sortConfig, setSortConfig] = useState(config);
 
   const sortedData = useMemo(() => {
     const items = [...data].sort(
-      naturalSorter(sortConfig.key, sortConfig.caseSensitive)
+      naturalSorter(sortConfig.key, sortConfig.caseSensitive),
     );
-    return sortConfig.direction === "asc" ? items : items.reverse();
+    return sortConfig.direction === 'asc' ? items : items.reverse();
   }, [data, sortConfig]);
 
   const setDirection = ({ key, direction }: ISortProps) => {
     return (
       direction ||
       (sortConfig.key === key
-        ? sortConfig.direction === "asc"
-          ? "desc"
-          : "asc"
-        : "asc")
+        ? sortConfig.direction === 'asc'
+          ? 'desc'
+          : 'asc'
+        : 'asc')
     );
   };
 
@@ -55,7 +55,7 @@ export const naturalSorter = (key: string, sensitive?: boolean) => (a, b) => {
   const av = a[key];
   const bv = b[key];
 
-  if (typeof av === "string" && typeof bv === "string") {
+  if (typeof av === 'string' && typeof bv === 'string') {
     if (sensitive) {
       return naturalCompare(av, bv);
     }
