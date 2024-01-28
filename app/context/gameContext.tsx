@@ -17,7 +17,7 @@ interface IGameContext {
 }
 
 interface IQueryContext {
-  onQuery: Dispatch<SetStateAction<string>>;
+  onQuery: (q: string) => void;
   value: string | undefined;
 }
 
@@ -27,7 +27,7 @@ interface ISortContext {
 }
 
 interface IWishlistContext {
-  onSelect: Dispatch<SetStateAction<boolean>>;
+  onSelect: (state: boolean) => void;
   value: boolean;
 }
 
@@ -35,7 +35,7 @@ interface IPlatformContext {
   data: Platform[];
   getName: (p: Platform) => string;
   getSlug: (p: Platform) => string;
-  onSelect: Dispatch<SetStateAction<Platform | undefined>>;
+  onSelect: (p: Platform | undefined) => void;
   selected: Platform | undefined;
 }
 
@@ -61,8 +61,8 @@ export const GameProvider = ({
   children: React.ReactNode;
 }) => {
   const [query, setQuery] = useState<string>('');
-  const [platform, setPlatform] = useState<Platform>();
   const [currentPage, setCurrentPage] = useState(0);
+  const [platform, setPlatform] = useState<Platform>();
   const [wishlist, setWishlist] = useState(false);
 
   const filteredGames = filterGames(data, query, platform, wishlist);
@@ -93,11 +93,17 @@ export const GameProvider = ({
           data: platforms,
           getName: getPlatformName,
           getSlug: getPlatformConsoleSlug,
-          onSelect: setPlatform,
+          onSelect: (p: Platform | undefined) => {
+            setPlatform(p);
+            setCurrentPage(0);
+          },
           selected: platform,
         },
         query: {
-          onQuery: setQuery,
+          onQuery: (q: string) => {
+            setQuery(q);
+            setCurrentPage(0);
+          },
           value: query,
         },
         sort: {
@@ -105,7 +111,10 @@ export const GameProvider = ({
           onSort: sortGames,
         },
         wishlist: {
-          onSelect: setWishlist,
+          onSelect: (state: boolean) => {
+            setWishlist(state);
+            setCurrentPage(0);
+          },
           value: wishlist,
         },
       }}

@@ -29,7 +29,10 @@ export const Dropdown = ({
     <div className="flex items-center justify-between">
       <div className="relative w-fit cursor-pointer">
         <button
-          className={clsx(maxWidth, 'flex items-center rounded-lg border p-2')}
+          className={clsx(
+            maxWidth,
+            'flex items-center justify-between rounded-lg border p-2',
+          )}
           onClick={() => setShowDropdown(!showDropdown)}
         >
           <span className="px-4">{selectedOption.label}</span>

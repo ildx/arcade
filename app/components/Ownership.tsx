@@ -28,7 +28,7 @@ export const Ownership = () => {
 
   return (
     <Dropdown
-      maxWidth="w-40"
+      maxWidth="w-48"
       onChange={onSelect}
       options={options}
       selectedOption={selectedOption}

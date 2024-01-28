@@ -18,14 +18,14 @@ export const Pagination = () => {
         <Fragment key={page}>
           <button
             className={clsx(
-              'p-4',
+              'px-4 py-2',
               pages.current === page && 'text-arc-purple-hilight',
             )}
             onClick={() => pages.onChange(page)}
           >
             {page + 1}
           </button>
-          {page + 1 !== pages.count && <span className="px-2 py-4">|</span>}
+          {page + 1 !== pages.count && <span className="m-auto h-full">|</span>}
         </Fragment>
       ))}
     </section>
