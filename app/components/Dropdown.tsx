@@ -24,7 +24,7 @@ export const Dropdown = ({
   };
 
   return (
-    <div className="relative cursor-pointer">
+    <div className="relative min-w-48 cursor-pointer">
       <button
         className="flex w-full items-center justify-between rounded-lg border p-2"
         onClick={() => setShowDropdown(!showDropdown)}
