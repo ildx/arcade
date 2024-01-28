@@ -23,12 +23,29 @@ body {
       -2px 2px 0 var(--arc-beige),
       2px 2px 0 var(--arc-beige);
   }
+
   .arc-arrow-right {
     width: 0;
     height: 0;
-    border-top: 10px solid transparent;
-    border-bottom: 10px solid transparent;
-    border-left: 10px solid green;
+    border-top: 5px solid transparent;
+    border-bottom: 5px solid transparent;
+    border-left: 5px solid var(--arc-beige);
+  }
+
+  .arc-arrow-down {
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 5px solid var(--arc-beige);
+  }
+
+  .arc-arrow-up {
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-bottom: 5px solid var(--arc-beige);
   }
 }
 
