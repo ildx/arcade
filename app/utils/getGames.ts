@@ -6,7 +6,7 @@ import fs from 'fs/promises';
 
 export type Game = {
   name: string;
-  owner: string;
+  owner: string | boolean;
   platform: Platform;
 };
 

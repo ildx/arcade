@@ -16,11 +16,17 @@ interface ISort {
   sortGames: ReturnType<typeof useSort>['sort'];
 }
 
+interface IQuery {
+  set: Dispatch<SetStateAction<string>>;
+  value: string | undefined;
+}
+
 interface IContext {
   actions: IActions;
   games: Game[];
   platform: Platform | undefined;
   platforms: Platform[];
+  query: IQuery;
   sort: ISort;
 }
 
@@ -29,6 +35,7 @@ export const GameContext = createContext<IContext>({
   games: [],
   platform: undefined,
   platforms: [],
+  query: {} as IQuery,
   sort: {} as ISort,
 });
 
@@ -39,18 +46,21 @@ export const GameProvider = ({
   data: Game[];
   children: React.ReactNode;
 }) => {
+  const [query, setQuery] = useState<string>('');
   const [platform, setPlatform] = useState<Platform>();
 
   const {
     data: games,
     sort: sortGames,
     sortConfig,
-  } = useSort(filterGames(data, platform), {
+  } = useSort(filterGames(data, query), {
     direction: 'asc',
     key: 'name',
   });
 
   const platforms = filterPlatforms(games);
+
+  const queryObject = { set: setQuery, value: query };
 
   return (
     <GameContext.Provider
@@ -62,6 +72,7 @@ export const GameProvider = ({
         games,
         platform,
         platforms,
+        query: queryObject,
         sort: {
           sortConfig,
           sortGames,
@@ -73,13 +84,17 @@ export const GameProvider = ({
   );
 };
 
-const filterGames = (games: Game[], platform: Platform | undefined) => {
-  return games.filter((game) =>
-    !platform
-      ? game
-      : JSON.stringify(game.platform) === JSON.stringify(platform),
-  );
+const filterGames = (games: Game[], query: string | undefined) => {
+  return games.filter((game) => (!query ? game : game.name.includes(query)));
 };
+
+// const filterGames = (games: Game[], platform: Platform | undefined) => {
+//   return games.filter((game) =>
+//     !platform
+//       ? game
+//       : JSON.stringify(game.platform) === JSON.stringify(platform),
+//   );
+// };
 
 const filterPlatforms = (games: Game[]) => {
   return Array.from(new Set(games.map((g) => JSON.stringify(g.platform)))).map(
