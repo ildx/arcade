@@ -6,12 +6,14 @@ import { useState } from 'react';
 export type Option = Record<'label' | 'value', string>;
 
 interface IDropdownProws {
+  maxWidth: string;
   onChange: (option: Option) => void;
   options: Option[];
   selectedOption: Option;
 }
 
 export const Dropdown = ({
+  maxWidth,
   onChange,
   options,
   selectedOption,
@@ -24,10 +26,10 @@ export const Dropdown = ({
   };
 
   return (
-    <section className="flex w-full max-w-4xl items-center justify-between">
+    <div className="flex items-center justify-between">
       <div className="relative w-fit cursor-pointer">
         <button
-          className="flex items-center rounded-lg border p-2"
+          className={clsx(maxWidth, 'flex items-center rounded-lg border p-2')}
           onClick={() => setShowDropdown(!showDropdown)}
         >
           <span className="px-4">{selectedOption.label}</span>
@@ -39,7 +41,12 @@ export const Dropdown = ({
           />
         </button>
         {showDropdown && (
-          <ul className="absolute mt-2 w-64 overflow-hidden rounded-lg border border-arc-beige bg-arc-beige text-arc-purple-dark">
+          <ul
+            className={clsx(
+              maxWidth,
+              'absolute mt-2 overflow-hidden rounded-lg border border-arc-beige bg-arc-beige text-arc-purple-dark',
+            )}
+          >
             {options.map((option, index) => (
               <li key={index}>
                 <button
@@ -53,6 +60,6 @@ export const Dropdown = ({
           </ul>
         )}
       </div>
-    </section>
+    </div>
   );
 };

@@ -9,7 +9,7 @@ import { Icon } from '@components/Icon';
 export const Search = () => {
   const { query } = useContext(GameContext);
   return (
-    <div className="relative">
+    <div className="relative flex flex-grow">
       <input
         type="text"
         className="w-full rounded-lg border bg-arc-purple-dark px-4 py-2 text-arc-beige"

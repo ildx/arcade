@@ -6,7 +6,7 @@ import { Search } from '@components/Search';
 import { Total } from '@components/Total';
 
 export const Toolbar = () => (
-  <section className="relative flex w-full max-w-5xl py-4">
+  <section className="relative flex w-full max-w-5xl gap-4 py-4">
     <Search />
     <Consoles />
     <Ownership />
