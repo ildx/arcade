@@ -8,7 +8,7 @@ import { GameContext } from '@context/gameContext';
 import { Icon } from '@components/Icon';
 
 export const Games = () => {
-  const { games, query, sort } = useContext(GameContext);
+  const { games, sort } = useContext(GameContext);
   return (
     <section className="w-full max-w-5xl">
       <table className="w-full border-separate border-spacing-0 overflow-hidden rounded-lg border">
@@ -30,17 +30,17 @@ export const Games = () => {
                 />
               </div>
             </Table.Heading>
-            <Table.Heading width="w-[30%]">Platform</Table.Heading>
+            <Table.Heading width="w-[30%]">Console</Table.Heading>
             <Table.Heading alignCenter width="w-[15%]">
               On a wishlist?
             </Table.Heading>
           </tr>
         </thead>
         <tbody>
-          {!!query.value && !games.data.length ? (
+          {!games.data.length ? (
             <tr>
               <td className="px-4 py-20 text-center" colSpan={3}>
-                No search results :(
+                No results :(
               </td>
             </tr>
           ) : (
@@ -50,9 +50,7 @@ export const Games = () => {
                 className={clsx(index % 2 !== 0 && 'bg-arc-blue-dark')}
               >
                 <Table.Cell>{game.name}</Table.Cell>
-                <Table.Cell>
-                  {game.platform.brand} {game.platform.console}
-                </Table.Cell>
+                <Table.Cell>{game.platform.console}</Table.Cell>
                 <Table.Cell alignCenter>
                   <div className="m-auto max-w-3">
                     {!game.owner && <Icon.Close color="fill-arc-beige" />}

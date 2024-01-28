@@ -1,14 +1,15 @@
 'use client';
 
-import { Icon } from './Icon';
 import { useContext } from 'react';
 
-import { GameContext } from '../context/gameContext';
+import { GameContext } from '@context/gameContext';
+
+import { Icon } from '@components/Icon';
 
 export const Search = () => {
   const { query } = useContext(GameContext);
   return (
-    <section className="relative w-full max-w-5xl py-4">
+    <div className="relative">
       <input
         type="text"
         className="w-full rounded-lg border bg-arc-purple-dark px-4 py-2 text-arc-beige"
@@ -25,6 +26,6 @@ export const Search = () => {
           <Icon.Close color="fill-arc-beige" />
         </button>
       )}
-    </section>
+    </div>
   );
 };
