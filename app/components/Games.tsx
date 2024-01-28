@@ -15,7 +15,7 @@ export const Games = () => {
         <thead>
           <tr>
             <Table.Heading
-              width="w-[55%]"
+              width="w-[65%]"
               onClick={() => sort.onSort({ key: 'name' })}
             >
               <div className="flex cursor-pointer items-center">
@@ -30,11 +30,8 @@ export const Games = () => {
                 />
               </div>
             </Table.Heading>
-            <Table.Heading responsive width="w-[30%]">
+            <Table.Heading responsive width="w-[35%]">
               Console
-            </Table.Heading>
-            <Table.Heading responsive alignCenter width="w-[15%]">
-              On a wishlist?
             </Table.Heading>
           </tr>
         </thead>
@@ -53,11 +50,6 @@ export const Games = () => {
               >
                 <Table.Cell>{game.name}</Table.Cell>
                 <Table.Cell responsive>{game.platform.console}</Table.Cell>
-                <Table.Cell responsive alignCenter>
-                  <div className="m-auto max-w-3">
-                    {!game.owner && <Icon.Close color="fill-arc-beige" />}
-                  </div>
-                </Table.Cell>
               </tr>
             ))
           )}

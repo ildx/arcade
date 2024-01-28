@@ -81,7 +81,7 @@ export const GameProvider = ({
     <GameContext.Provider
       value={{
         games: {
-          count: data.length,
+          count: sortedGames.length,
           data: paginatedGames.data[currentPage] ?? [],
           pages: {
             count: paginatedGames.count,
@@ -134,7 +134,7 @@ const filterGames = (
     .filter((game) =>
       !query ? game : game.name.toLowerCase().includes(query.toLowerCase()),
     )
-    .filter((game) => (!wishlist ? game : !game.owner))
+    .filter((game) => (!wishlist ? !!game.owner : !game.owner))
     .filter((game) =>
       !platform
         ? game
