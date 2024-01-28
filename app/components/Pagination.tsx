@@ -8,7 +8,11 @@ import { GameContext } from '@context/gameContext';
 export const Pagination = () => {
   const {
     games: { pages },
+    query,
   } = useContext(GameContext);
+
+  if (!!query.value && !pages.count) return null;
+
   return (
     <section className="mt-4 flex max-w-5xl rounded-lg border">
       {Array.from({ length: pages.count }, (_, page) => (

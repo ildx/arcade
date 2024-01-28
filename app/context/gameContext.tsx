@@ -53,13 +53,14 @@ export const GameProvider = ({
   const [currentPage, setCurrentPage] = useState(0);
 
   const filteredGames = filterGames(data, query);
+
   const {
     data: sortedGames,
     sort: sortGames,
     sortConfig,
   } = useSort(filteredGames, { direction: 'asc', key: 'name' });
-  const paginatedGames = paginateGames(sortedGames);
 
+  const paginatedGames = paginateGames(sortedGames);
   // const platforms = filterPlatforms(data);
 
   // const queryObject = { set: setQuery, value: query };
@@ -68,7 +69,7 @@ export const GameProvider = ({
     <GameContext.Provider
       value={{
         games: {
-          data: paginatedGames.data[currentPage],
+          data: paginatedGames.data[currentPage] ?? [],
           pages: {
             count: paginatedGames.count,
             current: currentPage,
