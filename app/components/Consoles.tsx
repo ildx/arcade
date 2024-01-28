@@ -42,7 +42,6 @@ export const Consoles = () => {
 
   return (
     <Dropdown
-      maxWidth="w-48"
       onChange={onSelect}
       options={options}
       selectedOption={selectedOption}
