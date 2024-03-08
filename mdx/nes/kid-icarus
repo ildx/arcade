@@ -1,0 +1,5 @@
+---
+name: "Kid Icarus"
+owner: 'Iivo'
+platform: { brand: 'Nintendo', console: 'NES' }
+---
